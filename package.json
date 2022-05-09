@@ -1,0 +1,29 @@
+{
+  "name": "node-advanced-home-task-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:junit": "cross-env MOCHA_FILE=junit.xml mocha test --reporter mocha-junit-reporter",
+    "test:xunit": "cross-env MOCHA_FILE=xunit.xml mocha test --reporter mocha-xunit-reporter",
+    "test": "npm run test:junit",
+    "test:unit": "mocha test --reporter spec"
+  },
+  "engines": {
+    "node": "<=12"
+  },
+  "author": "<PUT YOUR NAME HERE>",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "cross-env": "7.0.2",
+    "mocha": "6.2.2",
+    "mocha-junit-reporter": "1.23.3",
+    "mocha-xunit-reporter": "2.1.0",
+    "sinon": "^9.2.4",
+    "sinon-chai": "^3.5.0"
+  },
+  "dependencies": {
+  }
+}
