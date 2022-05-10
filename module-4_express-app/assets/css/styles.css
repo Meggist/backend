@@ -1,0 +1,202 @@
+@font-face {
+    font-family: "Moseo Sans";
+    src: url("../fonts/Museo Sans/MuseoSans-700.otf");
+    font-weight: bold;
+}
+
+body {
+    margin: 0;
+
+    font-family: "Sans Regular", "Arial", sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    border-bottom: 1px solid #ced0db;
+    font-family: "Moseo Sans", sans-serif;
+
+    padding: 20px;
+}
+
+.header__title {
+    margin: 0;
+    color: #303240;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 20px;
+}
+
+.task-form {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #ced0db;
+}
+
+.alert {
+    box-sizing: border-box;
+    min-width: 400px;
+
+    margin-top: 20px;
+
+    padding: 12px 18px;
+}
+
+.alert--error {
+    border-left: 6px solid #e54322;
+
+    background: #faded9;
+}
+
+.alert--success {
+    border-left: 6px solid #8c0;
+
+    background: #efc;
+}
+
+.input {
+    border: 1px #ced0db solid;
+
+
+    min-height: 36px;
+    min-width: 310px;
+
+    line-height: 24px;
+    font-size: 14px;
+    padding: 5px 10px;
+
+    outline: none;
+    background: none;
+
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+
+    color: #303240;
+}
+
+.button {
+    background: #8c0;
+
+    line-height: 24px;
+    font-size: 14px;
+    color: white;
+
+    padding: 5px 16px;
+
+    border: 0 transparent solid;
+
+    outline: none;
+}
+
+.button:hover {
+    transition: 0.2s;
+
+    background: #77b300;
+}
+
+.button:active {
+    transition: 0.05s;
+
+    background: #690;
+}
+
+.task-form__button {
+    min-height: 48px;
+
+    margin-left: -4px;
+
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.list {
+    list-style: none;
+    padding-left: 0;
+
+    min-width: 400px;
+}
+
+.list__item {
+    display: flex;
+
+    padding: 10px 0;
+
+    font-weight: 400;
+}
+
+.list__item-text {
+    padding-left: 5px;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+
+    border: 1px solid #ced0db;
+}
+
+.checkbox:hover {
+    border: 1px solid #0079b5;
+}
+
+.checkbox--checked {
+    border: 1px solid #0079b5;
+    background: #008ace;
+}
+
+.checkbox--checked svg {
+    fill: white;
+}
+
+.checkbox--checked:hover {
+    background: #0079b5;
+}
+
+.menu {
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
+
+    display: flex;
+}
+
+.menu__item {
+    padding: 10px;
+}
+
+.link {
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+
+    color: #008ace;
+}
+
+.link:hover {
+    transition: 0.2s;
+
+    color: #0079b5;
+}
+
+.link:active {
+    transition: 0.05s;
+
+    color: #00689b;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple TODO Application</title>
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+    <h1 class="header__title">Simple TODO Application</h1>
+
+    <ul class="menu">
+        <li class="menu__item">
+            <a class="link" href="./index.html">
+                TODO
+            </a>
+        </li>
+        <li class="menu__item">
+            <a class="link" href="./done.html">
+                DONE
+            </a>
+        </li>
+    </ul>
+</header>
+<main class="main">
+    <div class="task-form">
+        <form method="POST">
+            <input class="input" type="text" name="task" placeholder="I need to...">
+            <button class="task-form__button button" type="submit">Create</button>
+        </form>
+
+        <div class="alert alert--error">
+            Invalid task!
+        </div>
+
+        <div class="alert alert--success">
+            Task was added!
+        </div>
+    </div>
+
+    <h2> Todo List </h2>
+
+    <h3 class="no-tasks">There is no tasks.</h3>
+
+    <ul class="list">
+        <li class="list__item"> <div class="checkbox"></div> <span class="list__item-text">Get</span> </li>
+    </ul>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="./scripts/index.js">
+</script>
+</body>
+</html>
