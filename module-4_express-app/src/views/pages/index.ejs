@@ -1,0 +1,26 @@
+<div class="task-form">
+    <form method="POST" action="/">
+        <input class="input" type="text" name="task" placeholder="I need to...">
+        <button class="task-form__button button" type="submit">Create</button>
+    </form>
+    <%if(error){%>
+        <div class="alert alert--error"> <%=error%> </div>
+    <%}%>
+
+    <h2> Todo List </h2>
+    <%
+    if(tasks.length){%>
+        <ul class="list">
+            <% tasks.forEach(function (task) {%>
+                <li class="list__item"> <div class="checkbox"></div> <span class="list__item-text">
+            <%= task.name %>
+            </span> </li>
+            <%})%>
+        </ul>
+    <%} else {%>
+        <h3 class="no-tasks">There is no tasks.</h3>
+    <%}
+    %>
+
+
+</div>
