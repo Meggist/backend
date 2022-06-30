@@ -13,7 +13,7 @@
   "engines": {
     "node": "<=12"
   },
-  "author": "<PUT YOUR NAME HERE>",
+  "author": "Oleksandr Yarovyi",
   "license": "ISC",
   "devDependencies": {
     "chai": "4.2.0",
@@ -29,8 +29,10 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.6",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.3",
     "express-validator": "^6.10.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",

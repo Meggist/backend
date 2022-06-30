@@ -87,7 +87,6 @@ describe("ToDo Application API",  async function () {
         password: "123456789",
       })
       .catch(errorToResponse);
-
     expect(response.statusCode).to.be.equal(400, 'It should return 400 (Bad Request) when sent incorrect email!');
 
     response = await superagent.post(makeUrl('/auth/register'))
