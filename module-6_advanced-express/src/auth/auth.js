@@ -76,7 +76,6 @@ const verifyToken = (req,res,next) => {
         req.token = bearerHeader.split(' ')[1];
         next();
     } else {
-        console.log('213');
         res.sendStatus(401);
     }
 }
