@@ -2,8 +2,10 @@ const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
-
-const UserModule = require('../models/UserModel');
+const sequalize = require('../sequalize');
+const UserService = require("../service/UserService");
+const {where} = require("sequelize");
+const userService = new UserService(sequalize);
 
 passport.use(
     'register',
@@ -14,8 +16,8 @@ passport.use(
         },
         async (email, password, done) => {
             try {
-                const user = new UserModule({email, password});
-                await user.save();
+                console.log(userService);
+                await userService.create(email, password);
                 return done(null, 200);
             } catch (error) {
                 done(error);
@@ -33,13 +35,13 @@ passport.use(
         },
         async (email, password, done) => {
             try {
-                const user = await UserModule.findOne({email}).exec();
+                const user = await userService.models.User.findOne({where:{email}});
 
                 if (!user) {
                     return done(null, false);
                 }
 
-                const validate = await user.comparePassword(password);
+                const validate = await userService.comparePassword(user.dataValues.password, password);
 
                 if (!validate) {
                     return done(null, false);
@@ -81,5 +83,5 @@ const verifyToken = (req,res,next) => {
 
 module.exports = {
     passport,
-    verifyToken
+    verifyToken,
 };

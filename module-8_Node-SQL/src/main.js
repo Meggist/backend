@@ -3,10 +3,11 @@ const makeStoppable = require("stoppable")
 const http = require("http");
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require('express-validator');
-const mongoose = require('mongoose');
 
+const TaskService = require('./service/TaskService');
 const {passport, verifyToken} = require("./auth/auth");
-const TaskModel = require('./models/TaskModel');
+const sequalize = require('./sequalize');
+const {where} = require("sequelize");
 
 const secretKey = 'TOP_SECRET';
 
@@ -19,6 +20,8 @@ app.use(express.json());
 const router = express.Router();
 
 app.use('/', router);
+
+const taskService = new TaskService(sequalize)
 
 router.post('/api/auth/register',
     body('email').isLength({min: 6}).isEmail().exists(),
@@ -58,8 +61,8 @@ router.post('/api/auth/login',
                   { session: false },
                   async (error) => {
                     if (error) return next(error);
-
-                    const body = { userId: user._id };
+                      console.log(user)
+                    const body = { userId: user.id };
                     const token = jwt.sign({ user: body }, secretKey);
                     return res.json({ user: {email:user.email}, token });
                   }
@@ -87,12 +90,11 @@ router.post('/api/tasks',
             return res.status(400).send({error: errors.array()})
           } else {
             const {title, description} = req.body;
-            const allUserTasks = await TaskModel.find({userId: authData.user.userId});
-            if (allUserTasks.find(task => task.title === title)) {
+            const allUserTasks = await taskService.models.Task.findAll({where:{userId: authData.user.userId}});
+            if (allUserTasks && allUserTasks.find(({dataValues}) => dataValues.title === title)) {
                 return res.sendStatus(400);
             }
-            const task = new TaskModel({userId: authData.user.userId, title, description})
-            await task.save();
+            await taskService.create({userId: authData.user.userId, title, description});
             return res.sendStatus(201);
           }
         }});
@@ -112,8 +114,8 @@ router.post('/api/tasks/done',
             return res.sendStatus(400).send({error: errors.array()})
           } else {
             const {title} = req.body;
-            const {nModified} = await TaskModel.updateOne({userId: authData.user.userId, title}, {done: true})
-              nModified ?  res.sendStatus(200) : res.sendStatus(404);
+            const result = await taskService.models.Task.update({done: true}, {where: {userId: authData.user.userId, title}})
+              result[0] ? res.sendStatus(200) : res.sendStatus(404);
           }
         }});
     });
@@ -133,21 +135,22 @@ router.put('/api/tasks/:taskTitle',
             return res.sendStatus(400)
           } else {
             const {title, description} = req.body;
-            const allUserTasks = await TaskModel.find({userId: authData.user.userId});
-            const existedTask = allUserTasks.find(({title}) => title === req.params.taskTitle);
+            const allUserTasks = await taskService.models.Task.findAll({where:{userId: authData.user.userId}});
+            if(!allUserTasks) {
+                res.sendStatus(404);
+                return;
+            }
+            const existedTask = allUserTasks.find(({dataValues: {title}}) => title === req.params.taskTitle);
             if (!existedTask) {
                 res.sendStatus(404);
                 return;
             }
-            if (allUserTasks.find(task => task._id !== existedTask._id && task.title === title)) {
+            if (allUserTasks.find(({dataValues}) => dataValues.id !== existedTask.dataValues.id && dataValues.title === title)) {
                 res.sendStatus(400);
                 return;
             }
-            const {nModified} = await TaskModel.updateOne(
-                {userId: authData.user.userId, title: req.params.taskTitle},
-                {title, description});
-
-            nModified ? res.sendStatus(200) : res.sendStatus(404);
+              const result = await taskService.models.Task.update({title, description}, {where: {userId: authData.user.userId, title: req.params.taskTitle}})
+              result[0] ? res.sendStatus(201) : res.sendStatus(404);
           }
         }});
     });
@@ -166,12 +169,16 @@ router.delete('/api/tasks', verifyToken,
           } else {
             const {title} = req.body;
             const obj = {title, userId: authData.user.userId};
-            await TaskModel.deleteOne(obj);
+            await taskService.models.Task.destroy({where: obj});
             res.sendStatus(200)
           }
         }});
     }
 );
+
+router.get('/', (req, res) => {
+    res.send('HI');
+})
 
 getRequest('/api/tasks', false);
 getRequest('/api/tasks/done', true);
@@ -182,7 +189,7 @@ function getRequest(path, done) {
       if(err || !authData)
         res.sendStatus(401);
       else {
-        const tasks = (await TaskModel.find({userId: authData.user.userId, done}))
+        const tasks = (await taskService.models.Task.findAll({where:{userId: authData.user.userId, done}}))
             .map(({done, title, description}) => ({done, title, description}));
         return res.json(tasks);
       }
@@ -191,30 +198,19 @@ function getRequest(path, done) {
 }
 
 module.exports = async () => {
-  mongoose.connect('mongodb://localhost:27017/cluster0', {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-  }, err => {
-      if(err) {
-          console.log(err);
-          return;
-      }
-      console.log('DB connected');
-  });
-
-
+  const sequalize = require('./sequalize');
+    sequalize.authenticate().then(() => {
+        console.log('Connected to DB');
+    })
+        .catch(err => {
+            console.log(err);
+            process.exit(1);
+        })
   const stopServer = () => {
     return new Promise((resolve) => {
-      mongoose.disconnect();
       server.stop(resolve);
     })
   };
-
-  await new Promise((resolve, reject) => {
-    mongoose.connection.on('error', reject);
-    mongoose.connection.on('open', resolve);
-  });
 
   return new Promise((resolve) => {
     server.listen(3000, () => {

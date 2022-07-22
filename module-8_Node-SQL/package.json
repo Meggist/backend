@@ -1,5 +1,5 @@
 {
-  "name": "node-js-and-nosql-hometask",
+  "name": "node-js-and-sql-hometask",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -38,9 +38,12 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.7.0",
     "mongoose": "^5.12.5",
+    "mysql2": "^2.3.3",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "sequelize": "^6.21.3",
+    "sqlite3": "^5.0.8",
     "stoppable": "^1.1.0"
   }
 }

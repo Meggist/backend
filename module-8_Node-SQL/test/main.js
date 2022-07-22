@@ -21,12 +21,12 @@ const testAuthorizationRequired = async (url, method) => {
 
   expect(response.statusCode).to.be.equal(401, 'It should return 401 (Unauthorized)');
 
-  response = await superagent.post(makeUrl(url))
+  response = await superagent[method](makeUrl(url))
     .catch(errorToResponse);
 
   expect(response.statusCode).to.be.equal(401, 'It should return 401 (Unauthorized)');
 
-  response = await superagent.post(makeUrl(url))
+  response = await superagent[method](makeUrl(url))
     .auth('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjE3NjAzMDU2fQ.JPS8zUGvWZFjpbotV0oUjeWBNp9p0-tx1OI0P_fOETA', { type: 'bearer' })
     .catch(errorToResponse);
 
