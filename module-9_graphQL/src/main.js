@@ -17,7 +17,6 @@ const root = {
   }
 }
 
-// TODO: Implement server.
 app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true
