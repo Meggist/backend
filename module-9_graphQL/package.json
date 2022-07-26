@@ -1,0 +1,50 @@
+{
+  "name": "node-js-and-qraphQL",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --ignore **/*.json ./src/index.js",
+    "test:junit": "cross-env MOCHA_FILE=junit.xml mocha test --reporter mocha-junit-reporter",
+    "test:xunit": "cross-env MOCHA_FILE=xunit.xml mocha test --reporter mocha-xunit-reporter",
+    "test": "npm run test:junit",
+    "test:unit": "mocha test"
+  },
+  "engines": {
+    "node": "<=12"
+  },
+  "author": "Oleksandr Yarovyi",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-deep-match": "^1.2.1",
+    "cross-env": "7.0.2",
+    "mocha": "^8.3.2",
+    "mocha-junit-reporter": "1.23.3",
+    "mocha-xunit-reporter": "2.1.0",
+    "nodemon": "^2.0.7",
+    "sinon": "^9.2.4",
+    "superagent": "^6.1.0"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.4.0",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "express-validator": "^6.10.0",
+    "graphql": "^16.5.0",
+    "graphql-request": "^4.3.0",
+    "graphql-tools": "^8.3.0",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.7.0",
+    "mongoose": "^5.12.5",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "stoppable": "^1.1.0"
+  }
+}
