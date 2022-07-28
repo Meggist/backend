@@ -1,0 +1,20 @@
+{
+  "name": "jsmp-infra-oleksandr_yarovyi-module-10_package-managers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test:unit": "npm run compile & mocha test & npm run clean"
+  },
+  "author": "oleksandr_yarovyi",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  }
+}
