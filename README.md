@@ -1,2 +1,2 @@
-# basic-js-2022
+ basic-js-2022
 
