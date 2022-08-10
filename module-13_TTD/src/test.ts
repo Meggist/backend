@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-// import {Game} from './index';
+import {Game} from './index';
 
 describe('Tests', () => {
     const playerIndex = 0;
